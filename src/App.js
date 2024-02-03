@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from 'axios';
 
 import './App.css';
 
@@ -9,14 +10,17 @@ function App() {
   const [monsters, setMonsters] = useState([]);
   const [filteredMonsters, setFilteredMonsters] = useState([]);
   const [searchInput, setSearchInput] = useState("")
+  
   useEffect(() => {
     const fetchUsers = async () => {
-      const response = await fetch("https://jsonplaceholder.typicode.com/users");
-      const users = await response.json();
-      setMonsters(users);
+      const response = await axios(
+        'https://jsonplaceholder.typicode.com/users',
+      );
+    setMonsters(response.data);
     };
     fetchUsers();
   }, []);
+
   useEffect(() => {
     let filtered = [];
       if (searchInput === "") {
